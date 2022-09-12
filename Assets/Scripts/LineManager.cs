@@ -28,9 +28,7 @@ public class LineManager : MonoBehaviour
     public void DrawLine(Vector3 pos1, Vector3 pos2)
     {
         if(lines.Count == 0)
-            return;
-
-        AddLineToPool();
+            AddLineToPool();
         
         var line = lines[0];
         lines.RemoveAt(0);
