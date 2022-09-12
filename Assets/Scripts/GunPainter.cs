@@ -7,6 +7,8 @@ public class GunPainter : MonoBehaviour
 
     [SerializeField] private float randomAngle = 30f;
     [SerializeField] private int scansPerFrame = 10;
+    [SerializeField] private int horisonstalScans = 10;
+    [SerializeField] private float horisontalAngle = 10;
 
     [SerializeField] private Transform muzzle = null;
     [SerializeField] private LineManager lineManager;
@@ -22,19 +24,49 @@ public class GunPainter : MonoBehaviour
         
         if (click)
         {
-            Ray forwardRay = new Ray(muzzle.position, muzzle.forward);
-            Debug.DrawRay(forwardRay.origin, forwardRay.direction, Color.red);
-            
-            for (int i = 0; i < scansPerFrame; i++)
-            {
-                var direction = forwardRay.direction;
-                var offset = Random.insideUnitCircle * randomAngle;
-                direction.x += offset.x;
-                direction.y += offset.y;
-                var ray = new Ray(forwardRay.origin, direction);
-                Debug.DrawRay(ray.origin, ray.direction, Color.green);
-                ScanRay(ray);
-            }
+            SpotScan();
+        }
+        
+        click = OVRInput.Get(OVRInput.RawButton.RHandTrigger);
+        
+        if (click)
+        {
+            RowScan();
+        }
+    }
+
+    private void RowScan()
+    {
+        Ray forwardRay = new Ray(muzzle.position, muzzle.forward);
+        Debug.DrawRay(forwardRay.origin, forwardRay.direction, Color.red);
+
+        float step = horisontalAngle / horisonstalScans;
+        
+        for (int i = 0; i < horisonstalScans; i++)
+        {
+            var direction = forwardRay.direction;
+            Quaternion spreadAngle = Quaternion.AngleAxis(-horisontalAngle/2f + step * i, new Vector3(0, 1, 0));
+            direction = spreadAngle * direction;
+            var ray = new Ray(forwardRay.origin, direction);
+            Debug.DrawRay(ray.origin, ray.direction, Color.green);
+            ScanRay(ray);
+        }
+    }
+
+    private void SpotScan()
+    {
+        Ray forwardRay = new Ray(muzzle.position, muzzle.forward);
+        Debug.DrawRay(forwardRay.origin, forwardRay.direction, Color.red);
+
+        for (int i = 0; i < scansPerFrame; i++)
+        {
+            var direction = forwardRay.direction;
+            var offset = Random.insideUnitCircle * randomAngle;
+            direction.x += offset.x;
+            direction.y += offset.y;
+            var ray = new Ray(forwardRay.origin, direction);
+            Debug.DrawRay(ray.origin, ray.direction, Color.green);
+            ScanRay(ray);
         }
     }
 
