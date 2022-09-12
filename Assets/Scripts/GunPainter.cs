@@ -9,6 +9,7 @@ public class GunPainter : MonoBehaviour
     [SerializeField] private int scansPerFrame = 10;
 
     [SerializeField] private Transform muzzle = null;
+    [SerializeField] private LineManager lineManager;
 
     public float radius = 1;
     public float strength = 1;
@@ -48,6 +49,7 @@ public class GunPainter : MonoBehaviour
             Paintable p = hit.collider.GetComponent<Paintable>();
             if (p != null)
             {
+                lineManager.DrawLine(muzzle.position, hit.point);
                 PaintManager.instance.paint(p, hit.point, radius, hardness, strength, paintColor);
             }
         }
