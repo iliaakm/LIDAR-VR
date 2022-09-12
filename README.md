@@ -10,3 +10,6 @@ Based on [awesome painting project](https://github.com/mixandjam/Splatoon-Ink)
 Two modes: spot and wide row
 Made in hours, just for fan and to learn painting in Unity
 
+[More video](https://www.youtube.com/watch?v=XJDIB2x1JpA&ab)
+
+
