@@ -19,8 +19,8 @@ public class MousePainter : MonoBehaviour
 
     void Update()
     {
-        bool click;
-        click = mouseSingleClick ? Input.GetMouseButtonDown(0) : Input.GetMouseButton(0);
+        bool click = false;
+        //click = mouseSingleClick ? Input.GetMouseButtonDown(0) : Input.GetMouseButton(0);
 
         if (click)
         {
